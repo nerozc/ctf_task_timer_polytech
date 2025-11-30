@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Святилище Печатей</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css') }}">
+</head>
+<body>
+    <div id="doom-glow"></div>
+
+    <div id="hesitation-alert">
+        <h1>ВАШЕ МОЛЧАНИЕ ПОДОЗРИТЕЛЬНО</h1>
+        <p>Вы слишком долго колебались перед алтарем. Охранные чары активированы.</p>
+        <p style="color: grey; font-size: 0.8em; margin-top: 50px;">(Кликните, чтобы продолжить)</p>
+    </div>
+
+    <div class="grimoire">
+        <h2 style="color: #d4af37; font-weight: normal;">ПЕЧАТЬ ОХРАННИКА</h2>
+        
+        <div id="ritual-form" class="loading">
+            <div class="field-group">
+                <label>Начертание Имени</label>
+                <input type="text" id="inp_user" placeholder="...">
+            </div>
+
+            <div class="field-group">
+                <label>Символ Власти</label>
+                <input type="password" id="inp_pass" placeholder="...">
+            </div>
+
+            <button onclick="castSpell()">ПРОИЗНЕСТИ</button>
+        </div>
+
+        <div id="message">Синхронизация с эфиром...</div>
+        
+        <div id="timer-container" style="display:none;">
+            Угасание: <span id="countdown">05:00</span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/portal.js') }}"></script>
+</body>
+</html>

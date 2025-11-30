@@ -1,0 +1,17 @@
+version: '3'
+services:
+  web:
+    build: ./app
+    ports:
+      - "5000:5000"
+    links:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/cultdb
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=cultdb
