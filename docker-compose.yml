@@ -8,6 +8,7 @@ services:
       - mongo
     environment:
       - MONGO_URI=mongodb://mongo:27017/cultdb
+      - FLAG=${FLAG}
     depends_on:
       - mongo
 

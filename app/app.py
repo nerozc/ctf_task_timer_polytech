@@ -11,6 +11,8 @@ client = MongoClient(mongo_uri)
 db = client.arcanum
 keepers_collection = db.keepers
 
+FLAG = os.environ.get('FLAG', 'CTF{PLACEHOLDER_FLAG}')
+
 KEEPERS_POOL = [
     {"u": "Grand_Archivist", "p": "V0id_Wh1sp3rs_Deep"},
     {"u": "Keeper_Malachai", "p": "S0uls_B1nd_F0r3v3r"},
@@ -28,16 +30,9 @@ arcane_config = {
 }
 
 def generate_rune_string(length=5):
-    """Генерирует случайную часть для имени поля"""
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=length))
 
 def regenerate_sanctum():
-    """
-    Полная перестройка защиты:
-    1. Выбирает нового пользователя/пароль.
-    2. Генерирует новые имена полей JSON.
-    3. Обновляет базу данных.
-    """
     global arcane_config
     
     keeper = random.choice(KEEPERS_POOL)
@@ -46,10 +41,11 @@ def regenerate_sanctum():
     new_seal_glyph = f"s_{generate_rune_string()}_sigil"
     
     keepers_collection.delete_many({})
+    
     keepers_collection.insert_one({
         "username": keeper['u'],
         "password": keeper['p'],
-        "info": "CTF{h1dd3n_r3qu3sts_r3v34l_th3_p4th}" 
+        "info": FLAG 
     })
     
     arcane_config["name_glyph"] = new_name_glyph
@@ -71,8 +67,6 @@ def portal():
 
 @app.route('/api/divination', methods=['GET'])
 def get_runes():
-    """
-    """
     regenerate_sanctum()
     return jsonify({
         "status": "divination_success",
